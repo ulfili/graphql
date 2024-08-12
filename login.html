@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graphql</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="images/domen.png" type="image/png">
+
+
+</head>
+<body>
+    <div id="container">
+    <div id="login">
+        <h2 id="loginText">Please login</h2>
+        <input type="username" id="username" placeholder="Username or Email">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="handleLogin()">Log in</button>
+        <div id="loginError"></div>
+    </div>
+    </div>
+    <div id="profile" style="display:none;">
+            <h2>PROFILE INFO</h2>
+            <div id="userInfo"></div>
+            <h3>XP RANGE</h3>
+            <div id="chartContainer"></div>
+            <button onclick="handleLogout()" id="logoutButton">Log out</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.1/dist/js.cookie.min.js"></script>
+</body>
+</html>

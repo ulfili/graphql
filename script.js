@@ -183,6 +183,11 @@ function loadTransactionTable() {
             const xpData = Array.from(xpDataByMonth, ([date, amount]) => ({ date, amount }));
 
             renderBarChart(xpData);
+            const auditData = [
+                { label: "Audits received", value: 50, color: "#5e00789a"},
+                { label: "Audits given", value: 50, color: "#d15af25e"}
+            ];
+            renderPieChart(auditData)
         } else {
             console.error('Failed to load transaction data');
         }
@@ -237,7 +242,7 @@ function renderBarChart(xpData) {
         d3.select(this).attr("fill", "#5e00789a");
    })
    .on("mouseout", function(event, d) {
-        d3.select(this).attr("fill", "#d15af25e");
+        d3.select(this).attr("fill", "#d15af25e"); 
    });
 
     svg.selectAll(".text")
@@ -249,4 +254,41 @@ function renderBarChart(xpData) {
        .attr("fill", "white")
        .text(d => d.amount);
 
+}
+
+function renderPieChart(auditData) {
+    const width = 400;
+    const height = 400;
+    const radius = Math.min(width, height) / 2;
+
+    const svg = d3.select("#auditChartContainer")
+        .append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        .append("g")
+        .attr("transform", `translate(${width / 2}, ${height / 2})`);
+
+    const pie = d3.pie()
+        .value(d => d.value);
+
+    const arc = d3.arc()
+        .outerRadius(radius - 10)
+        .innerRadius(0);
+
+    const arcs = svg.selectAll(".arc")
+        .data(pie(auditData))
+        .enter().append("g")
+        .attr("class", "arc");
+
+    arcs.append("path")
+        .attr("d", arc)
+        .attr("fill", d => d.data.color);
+
+    arcs.append("text")
+        .attr("transform", d => `translate(${arc.centroid(d)})`)
+        .attr("dy", "0.35em")
+        .attr("text-anchor", "middle")
+        .style("fill", "white")
+        .style("font-size", "14px")
+        .text(d => `${d.data.label}: ${d.data.value}%`);
 }
